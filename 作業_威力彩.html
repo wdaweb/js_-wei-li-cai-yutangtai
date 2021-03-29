@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>威力彩</title>
+</head>
+
+<body>
+    <script>
+        //A 區 1~38 取 6 個數字
+        //B 區 1~8 取 1 個數字
+
+        /*自己的寫法------------------------------------------*/
+        //給範圍找隨機整數
+        const findRandNum = (min, max) => {
+            let randomNum = Math.floor((Math.random() * max + min));
+            return randomNum;
+        }
+
+        //A 區
+        let numsArrA = [];
+        let numA;
+
+        const randA = (min, max) => {
+            for (let i = 1; i <= 6; i++) {
+                numA = findRandNum(min, max);
+                //注意：如果把上一行放到 for 迴圈外就會產生無窮迴圈
+                //因為那時候 numA 就只會跑一次 if，接下來都會進入 else 裡
+                console.log(i);
+                if (numsArrA.indexOf(numA) === -1) {
+                    numsArrA.push(numA);
+                    console.log(numsArrA);
+                } else {
+                    i--;
+                }
+            }
+        }
+        randA(1, 38);
+        document.write(`A區: ${numsArrA}</br>`);
+
+        /*也可以用 numsArrA.includes(numA) 來判斷，因此反而是 else ，才會 push 進去，而符合 if 者就會i--*/
+
+
+        //B 區
+        let numB;
+        const randB = (min, max) => {
+            numB = findRandNum(min, max);
+            console.log(numB);
+            return numB;
+        }
+        randB(1, 8);
+        document.write(`B區: ${numB}`);
+
+
+        /*老師的解法-----------------------------------------------*/
+        const rand = (min, max) => {
+            return Math.round(Math.random() * (max - min)) + min
+        }
+
+        let ballNumbers = [];
+        let a = [];
+        for (let i = 1; i <= 38; i++) {  //總共有 38 顆球
+            ballNumbers.push(i);
+        }
+        for (let i = 1; i <= 6; i++) {
+            let index = rand(0, numbers.length - 1);  //取 0~37 的數字
+            a.push(ballNumbers[index]);
+            ballNumbers.splice(index, 1);
+        }
+        document.write(a.join(''));
+
+
+
+        /*課本的寫法-----------------------------------------------*/
+        // let lottery = [];
+        // let number = [];  //總共跑幾次
+        // let n; //隨機數字
+        // let i = 1; 
+
+        // /** 觀念釐清1. */
+        // /*** i = 跑幾次 **/
+        // while(i <= 6){
+        //     n = Math.floor(Math.random()*38) + 1;
+        //     // console.log(n);
+        //     if(lottery.indexOf(n) === -1){
+        //         lottery.push(n);
+        //     }            
+        //     number.push(n);
+        //     i++;
+        //     console.log(i); //當 i > 6 迴圈就會停止
+        // }
+        // console.log(`${lottery.length} lottery: ${lottery}`); 
+        // console.log(`${number.length} total: ${number}`);
+        //為何 lottery 的資料數可能會小於 6?
+        //因為 i 代表的是跑迴圈的次數，最多只跑 6 次，雖然重複者不會丟進陣列裡，但該次迴圈仍然算在總迴圈次數內 
+
+
+        /** 觀念釐清2. */
+        /*** lottery.length = 球的數量 **/
+        // while(lottery.length <= 6){
+        //     n = Math.floor(Math.random()*38) + 1;
+        //     // console.log(n);
+        //     console.log(lottery.length);
+        //     if(lottery.indexOf(n) === -1){
+        //         lottery.push(n);
+        //     }
+        //     number.push(n);
+        // }
+        // console.log(`${lottery.length} lottery: ${lottery}`); 
+        // console.log(`${number.length} total: ${number}`);
+        //為何會有七筆資料?
+        //因為總共有六顆球時(陣列裡有六個數字)，仍符合 lottery.length <= 6 的條件，因此還會再跑一次迴圈
+        //所以必須將 (lottery.length <= 6) 改成 (lottery.length < 6) 才會得到題目要的六筆資料
+
+
+        /*室友的寫法-----------------------------------------*/
+        // let arr = []
+        // const lottery = (min, max) => {
+        //     return Math.round(Math.random() * (max - min)) + min;
+        // }
+        // for (let i = 1; i <= 6; i++) {
+        //     const num = lottery(1, 38);
+        //     if (arr.indexOf(num) === -1) {
+        //         console.log(num);
+        //         arr.push(num);
+        //     } else {
+        //         i--; //重新抽
+        //     }
+        // }
+        // document.write(`${arr}<br>`);
+
+
+
+    </script>
+</body>
+
+</html>
